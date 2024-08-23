@@ -29,6 +29,7 @@ def dist_init(port=23456):
         else:
             return s
 
+    # what is slurm?
     rank = int(os.environ['SLURM_PROCID'])
     local_rank = int(os.environ['SLURM_LOCALID'])
     world_size = int(os.environ['SLURM_NTASKS'])

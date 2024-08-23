@@ -1,5 +1,4 @@
-## Weakly Supervised Contrastive Learning (ICCV2021)
-
+# Weakly Supervised Contrastive Learning (ICCV2021)
 
 This repository contains PyTorch evaluation code, training code and pretrained models for WCL.
 
@@ -7,11 +6,11 @@ For details see [Weakly Supervised Contrastive Learning](https://openaccess.thec
 
 ![WCL](img/framework.png)
 
-
 ## Reproducing
+
 To run the code, you probably need to change the Dataset setting (dataset/imagenet.py), and Pytorch DDP setting (util/dist_init.py) for your own server enviroments.
 
-The distribued training of this code is base on slurm enviroments, we have provide the training scrips under the script folder.
+The distribued training of this code is base on *slurm enviroments*, we have provide the training scrips under the script folder.
 
 In this code, we adopt a hidden dimension of 4096 and output dimension 256 for the projection head (we use 2048 and 128 in our paper) since we found the performance can be further improved a little bit.
 
@@ -22,10 +21,11 @@ In this code, we adopt a hidden dimension of 4096 and output dimension 256 for t
 
 If you want to test the pretained model, please download the weights from the link above, and move it to the checkpoints folder (create one if you don't have .checkpoints/ directory). The evaluation scripts also has been provided in script/train.sh
 
-
 ## Citation
+
 If you find that wcl interesting and help your research, please consider citing it:
-```
+
+```text
 @InProceedings{Zheng_2021_ICCV,
     author    = {Zheng, Mingkai and Wang, Fei and You, Shan and Qian, Chen and Zhang, Changshui and Wang, Xiaogang and Xu, Chang},
     title     = {Weakly Supervised Contrastive Learning},
@@ -35,4 +35,3 @@ If you find that wcl interesting and help your research, please consider citing 
     pages     = {10042-10051}
 }
 ```
-

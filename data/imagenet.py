@@ -2,7 +2,7 @@ import torch.utils.data as data
 import os
 import torchvision.transforms as transforms
 from PIL import Image
-import mc
+import memcache as mc # guessing this is mc. originally `import mc`
 import io
 
 

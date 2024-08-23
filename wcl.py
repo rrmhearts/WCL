@@ -23,6 +23,9 @@ epochs = args.epochs
 warm_up = 10
 
 def adjust_learning_rate(optimizer, epoch, base_lr, i, iteration_per_epoch):
+    """
+    adjusts the learning rate of the optimizer based on the current epoch and iteration within the epoch, following a learning rate schedule that includes both a warm-up phase and a cosine annealing phase.
+    """
     T = epoch * iteration_per_epoch + i
     warmup_iters = warm_up * iteration_per_epoch
     total_iters = (epochs - warm_up) * iteration_per_epoch
@@ -38,6 +41,9 @@ def adjust_learning_rate(optimizer, epoch, base_lr, i, iteration_per_epoch):
 
 
 def train(train_loader, model, local_rank, rank, criterion, optimizer, epoch, iteration_per_epoch, base_lr):
+    """
+        training loop
+    """
     batch_time = AverageMeter('Time', ':6.3f')
     data_time = AverageMeter('Data', ':6.3f')
     losses = AverageMeter('Loss', ':.4e')
@@ -54,6 +60,7 @@ def train(train_loader, model, local_rank, rank, criterion, optimizer, epoch, it
 
     end = time.time()
     for i, (img1, img2) in enumerate(train_loader):
+        # adjust learning rate for each iteration
         adjust_learning_rate(optimizer, epoch, base_lr, i, iteration_per_epoch)
         data_time.update(time.time() - end)
 
@@ -61,7 +68,7 @@ def train(train_loader, model, local_rank, rank, criterion, optimizer, epoch, it
             img1 = img1.cuda(local_rank, non_blocking=True)
             img2 = img2.cuda(local_rank, non_blocking=True)
 
-        # compute output
+        # compute output and loss
         output, target, graph_loss = model(img1, img2)
         ce_loss = criterion(output, target)
         loss = ce_loss + graph_loss
