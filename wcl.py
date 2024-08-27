@@ -98,7 +98,11 @@ def main():
     from torch.nn.parallel import DistributedDataParallel
     from util.dist_init import dist_init
     
-    rank, local_rank, world_size = dist_init()
+    try:
+        rank, local_rank, world_size = dist_init()
+    except KeyError:
+        rank, local_rank, world_size = 0, 0, 1
+        
     batch_size = args.batch_size_pergpu
     num_workers = 8
     base_lr = 0.075 * sqrt(batch_size * world_size)

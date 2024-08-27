@@ -37,7 +37,11 @@ def accuracy(output, target, topk=(1,)):
 
 
 def main():
-    rank, local_rank, world_size = dist_init()
+    try:
+        rank, local_rank, world_size = dist_init()
+    except KeyError:
+        rank, local_rank, world_size = 0, 0, 1
+
     epochs = 80
     batch_size = 4096 // world_size
     num_workers = 8
